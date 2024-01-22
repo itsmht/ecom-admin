@@ -35,13 +35,25 @@
     <div class="splash-container">
         <div class="card ">
             <div class="card-header text-center"><a href="../index.html"><img class="logo-img" src="../assets/images/quirky.png" alt="logo" style="height:70px;"></a><span class="splash-description">Please enter your user information.</span></div>
+            @if (\Session::has('message'))
+                    <div class="alert alert-danger">
+                        {{\Session::get('message')}}
+                    </div>
+                @endif
             <div class="card-body">
-                <form>
+                <form action="{{route('login.submit')}}" method="POST">
+                    {{@csrf_field()}}
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="username" type="text" placeholder="Username" autocomplete="off">
+                        <input class="form-control form-control-lg" name="admin_phone" id="admin_phone" type="text" placeholder="Phone" autocomplete="off">
+                        @error('admin_phone')
+                        <span class="text-danger">{{$message}}</span><br>
+                        @enderror
                     </div>
                     <div class="form-group">
-                        <input class="form-control form-control-lg" id="password" type="password" placeholder="Password">
+                        <input class="form-control form-control-lg" name="admin_password" id="admin_password" type="password" placeholder="Password">
+                        @error('admin_password')
+                        <span class="text-danger">{{$message}}</span><br>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-primary btn-lg btn-block">Log in</button>
                 </form>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +15,8 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
+Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
+
+Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], function () {
+    Route::get('/adminDashboard', [AdminController::class, 'dashboard'])->name('adminDashboard');
+});
