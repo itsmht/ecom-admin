@@ -30,7 +30,7 @@
                                                 <td>{{$category->category_name}}</td>
                                                 <td><img style="width:30px; height:30px;" src="{{$category->category_logo}}" alt="company_logo" ></td>
                                                 <td><img style="width:30px; height:30px;" src="{{$category->category_banner}}" alt="Nothing to show" ></td>
-                                                <td>{{$category->category_banner}}</td>
+                                                <td>{{$category->category_status}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

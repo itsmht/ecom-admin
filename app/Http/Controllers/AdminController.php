@@ -68,6 +68,7 @@ class AdminController extends Controller
             $req->file('category_banner')->move(public_path('category_images'),$file_name);
             $category->category_banner = $file_name;
         }
+        $category->category_status = "Active";
         $category->save();
         Alert::success('Successfull', 'New Category Added');
         return back();
