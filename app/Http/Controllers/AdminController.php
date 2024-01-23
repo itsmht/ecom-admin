@@ -64,7 +64,7 @@ class AdminController extends Controller
             //$req->file('category_banner')->storeAs($folderPath, $name, 'public_outside');
             //$category->category_banner =$url . "/" . $folderPath. "/"  . $name;
             $url = "https://admin.quirkybuy.com/public/category_images";
-            $file_name = $url."/".$admin->admin_phone.time().".".$req->file('category_banner')->getClientOriginalExtension();
+            $file_name = $url."/".$admin->admin_phone.time()."."."banner".$req->file('category_banner')->getClientOriginalExtension();
             $req->file('category_banner')->move(public_path('category_images'),$file_name);
             $category->category_banner = $file_name;
         }
