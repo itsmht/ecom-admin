@@ -19,4 +19,6 @@ Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('logi
 
 Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], function () {
     Route::get('/adminDashboard', [AdminController::class, 'dashboard'])->name('adminDashboard');
+    Route::get('/categories', [AdminController::class, 'categories'])->name('categories');
+    Route::post('/addCategory', [AdminController::class, 'addCategory'])->name('addCategory');
 });
