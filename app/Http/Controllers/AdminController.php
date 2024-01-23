@@ -46,24 +46,27 @@ class AdminController extends Controller
 
         if($req->category_logo)
         {
-            $url = "https://quirkybuy.com/app_images";
-            $folderPath = "category_images"."/".$mytime->toDateString()."-".$admin->admin_name;
-            $name = $admin->admin_phone. "-" . time() . '.' . $req->file('category_logo')->getClientOriginalExtension();
-            
-
-            // Save the new photo
-            $req->file('category_logo')->storeAs($folderPath, $name, 'public_outside');
-            $category->category_logo =$url . "/" . $folderPath. "/"  . $name;
+            //$url = "https://quirkybuy.com/app_images";
+            //$folderPath = "category_images"."/".$mytime->toDateString()."-".$admin->admin_name;
+            //$name = $admin->admin_phone. "-" . time() . '.' . $req->file('category_logo')->getClientOriginalExtension();
+            //$req->file('category_logo')->storeAs($folderPath, $name, 'public_outside');
+            //$category->category_logo =$url . "/" . $folderPath. "/"  . $name;
+            $url = "https://admin.quirkybuy.com/public/category_images";
+            $file_name = $url."/".$admin->admin_phone.time().".".$req->file('category_logo')->getClientOriginalExtension();
+            $req->file('category_logo')->move(public_path('category_images'),$file_name);
+            $account->account_image = $file_name;
         }
         if($req->category_banner)
         {
-            $url = "https://quirkybuy.com/app_images";
-            $folderPath = "category_images"."/".$mytime->toDateString()."-".$admin->admin_name;
-            $name = $admin->admin_phone. "-" . time() . '.' . $req->file('category_logo')->getClientOriginalExtension();
-
-            // Save the new photo
-            $req->file('category_banner')->storeAs($folderPath, $name, 'public_outside');
-            $category->category_banner =$url . "/" . $folderPath. "/"  . $name;
+            //$url = "https://quirkybuy.com/app_images";
+            //$folderPath = "category_images"."/".$mytime->toDateString()."-".$admin->admin_name;
+            //$name = $admin->admin_phone. "-" . time() . '.' . $req->file('category_logo')->getClientOriginalExtension();
+            //$req->file('category_banner')->storeAs($folderPath, $name, 'public_outside');
+            //$category->category_banner =$url . "/" . $folderPath. "/"  . $name;
+            $url = "https://admin.quirkybuy.com/public/category_images";
+            $file_name = $url."/".$admin->admin_phone.time().".".$req->file('category_banner')->getClientOriginalExtension();
+            $req->file('category_banner')->move(public_path('category_images'),$file_name);
+            $account->account_image = $file_name;
         }
         $category->save();
         Alert::success('Successfull', 'New Category Added');
