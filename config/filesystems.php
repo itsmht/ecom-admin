@@ -31,7 +31,7 @@ return [
     'disks' => [
         'public_outside' => [
             'driver' => 'local',
-            'root' => public_path('../../public_html/app_images'),
+            'root' => public_path('../public_html/app_images'),
             'url' => env('APP_URL').'/storage_outside',
             'visibility' => 'public',
         ],
