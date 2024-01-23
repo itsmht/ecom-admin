@@ -1,7 +1,6 @@
 @include('layouts.header')
 @include('layouts.topbar')
 @include('layouts.sidebar')
-@include('sweetalert::alert')
 <div class="dashboard-wrapper">
             <div class="container-fluid  dashboard-content">
                     
@@ -17,7 +16,7 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
+                                                <th scope="col">ID</th>
                                                 <th scope="col">Category Name</th>
                                                 <th scope="col">Logo</th>
                                                 <th scope="col">Banner</th>
@@ -29,8 +28,8 @@
                                             <tr>
                                                 <th scope="row">{{$category->category_id}}</th>
                                                 <td>{{$category->category_name}}</td>
-                                                <td><img style="width:30px; height:30px;" src="{{$category->category_logo}}" alt="company_logo" ><br><br></td>
-                                                <td>{{$category->category_banner}}</td>
+                                                <td><img style="width:30px; height:30px;" src="{{$category->category_logo}}" alt="company_logo" ></td>
+                                                <td><img style="width:30px; height:30px;" src="{{$category->category_banner}}" alt="Nothing to show" ></td>
                                                 <td>{{$category->category_banner}}</td>
                                             </tr>
                                         @endforeach
@@ -59,7 +58,8 @@
                             </a>
                         </div>
                         <div class="modal-body">
-                        <form>
+                        <form action="{{route('addCategory')}}" method="POST" enctype="multipart/form-data">
+                        {{@csrf_field()}}
                     <div class="form-group">
                         <label for="category_name" class="col-form-label">Category Name</label>
                         <input id="category_name" name="category_name" type="text" class="form-control">
@@ -82,7 +82,7 @@
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                        <a href="#" class="btn btn-primary">Save changes</a>
+                        <button type="submit" class="btn btn-primary ">Save</button>
                     </div>
              </form>
               </div>

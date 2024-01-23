@@ -13,3 +13,4 @@
     <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
 </head>
 <body>
+@include('sweetalert::alert')
