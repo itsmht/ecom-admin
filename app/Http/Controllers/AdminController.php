@@ -54,7 +54,7 @@ class AdminController extends Controller
             $url = "https://admin.quirkybuy.com/public/category_images";
             $file_name = $url."/".$admin->admin_phone.time().".".$req->file('category_logo')->getClientOriginalExtension();
             $req->file('category_logo')->move(public_path('category_images'),$file_name);
-            $account->account_image = $file_name;
+            $category->category_logo = $file_name;
         }
         if($req->category_banner)
         {
@@ -66,7 +66,7 @@ class AdminController extends Controller
             $url = "https://admin.quirkybuy.com/public/category_images";
             $file_name = $url."/".$admin->admin_phone.time().".".$req->file('category_banner')->getClientOriginalExtension();
             $req->file('category_banner')->move(public_path('category_images'),$file_name);
-            $account->account_image = $file_name;
+            $category->category_banner = $file_name;
         }
         $category->save();
         Alert::success('Successfull', 'New Category Added');
