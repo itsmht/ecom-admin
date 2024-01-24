@@ -19,7 +19,7 @@
                                 <a class="nav-link " href="{{route('categories')}}"  aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-1"><i class="fas fa-briefcase"></i>Categories</a>    
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-1"><i class="fas fa-briefcase"></i>Products</a>    
+                                <a class="nav-link " href="{{route('products')}}"  aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-1"><i class="fas fa-briefcase"></i>Products</a>    
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-1"><i class="fas fa-child"></i>Users</a>    
