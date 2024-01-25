@@ -9,6 +9,7 @@ use App\Models\Admin;
 use File;
 use Datetime;
 use Carbon\Carbon;
+use App\Http\Controllers\AdminController;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProductController extends Controller
@@ -94,6 +95,9 @@ class ProductController extends Controller
 
             }
         }
+        $log_string = "Created By: ".$admin->admin_name ." - Product ID: ".$product->product_id. " - Product Name: ".$product->product_name." - Time: ".$mytime->toDateTimeString();
+        $log = new AdminController();
+        $log->createLog("Product",$log_string);
         Alert::success('Successfull', 'New Product Added');
         return redirect()->route('products');
     }

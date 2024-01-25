@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Log;
 use App\Models\Admin;
 use File;
 use Datetime;
@@ -70,7 +71,16 @@ class AdminController extends Controller
         }
         $category->category_status = "Active";
         $category->save();
+        $log_string = "Created By: ".$admin->admin_name ." - Category ID: ".$category->category_id. " - Category Name: ".$category->category_name." - Time: ".$mytime->toDateTimeString();
+        $this->createLog("Category", $log_string);
         Alert::success('Successfull', 'New Category Added');
         return back();
+    }
+    function createLog($log_module, $log_string)
+    {
+        $log = new Log();
+        $log->log_module = $log_module;
+        $log->log_string = $log_string;
+        $log->save();
     }
 }
