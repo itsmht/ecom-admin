@@ -51,4 +51,10 @@ class AuthController extends Controller
             return redirect()->route("login")->with('message','The credentials does not match!');
         }
     }
+    function logout()
+    {
+        session()->forget('logged'); //Session destroyed
+        session()->flash('msg','Sucessfully Logged out');
+        return redirect()->route('login');
+    }
 }

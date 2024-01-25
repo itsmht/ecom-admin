@@ -15,8 +15,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 class AdminController extends Controller
 {
     function dashboard()
-    {
-        return view('admin.dashboard');
+    {   $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        return view('admin.dashboard')->with('admin', $admin);
     }
     function categories()
     {

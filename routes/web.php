@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductController;
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('login.submit');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], function () {
     Route::get('/adminDashboard', [AdminController::class, 'dashboard'])->name('adminDashboard');
