@@ -16,14 +16,14 @@
                                     <table class="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th scope="col">ID</th>
+                                                <th scope="col">Product ID</th>
                                                 <th scope="col">Product Name</th>
+                                                <th scope="col">Category</th>
                                                 <th scope="col">Product Price</th>
                                                 <th scope="col">Discounted Price</th>
                                                 <th scope="col">Discounted Percentage</th>
                                                 <th scope="col">Minimum Buying Quantity</th>
                                                 <th scope="col">Stock</th>
-                                                <th scope="col">Icon</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -31,12 +31,13 @@
                                             <tr>
                                                 <th scope="row">{{$product->product_id}}</th>
                                                 <td>{{$product->product_name}}</td>
+                                                <td>{{$product->category->category_name}}</td>
                                                 <td>{{$product->product_actual_price}}</td>
                                                 <td>{{$product->product_discounted_price}}</td>
                                                 <td>{{$product->product_discount_percentage}}</td>
                                                 <td>{{$product->product_min_buy_quantity}}</td>
                                                 <td>{{$product->product_stock}}</td>
-                                                <td>{{$product->product_stock}}</td>
+                                                
                                             </tr>
                                         @endforeach
                                         </tbody>
