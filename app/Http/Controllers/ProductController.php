@@ -53,6 +53,7 @@ class ProductController extends Controller
         $mytime = Carbon::now();
         $product = new Product();
         $product->product_name = $req->product_name;
+        $product_name_without_space = str_replace(' ', '-', $req->product_name);
         $product->category_id = $req->category_id;
         $price_in_coin = $req->product_actual_price/100;
         $product->product_actual_price = $price_in_coin;
@@ -72,7 +73,7 @@ class ProductController extends Controller
         $product->product_stock = $req->product_stock;
         $product->product_status = "1";
         $product->product_description = $req->product_description;
-        $product->product_slug = $req->product_name."-".$mytime->toDateString();
+        $product->product_slug = $product_name_without_space."-".$mytime->toDateString();
         $product->save();
         if ($req->hasFile('product_images')) 
         {
@@ -85,7 +86,7 @@ class ProductController extends Controller
                 $url = "https://admin.quirkybuy.com/public/product_images";
                 //$file_name = $url."/".$product->product_name."-".$admin->admin_phone."-".time().".".$req->file('product_image')->getClientOriginalExtension();
                 //$req->file('product_image')->move(public_path('product_images'),$file_name);
-                $file_name = $url . "/" . $product->product_name . "-" . $admin->admin_phone . "-" . time() . $image_count ."." . $file->getClientOriginalExtension();
+                $file_name = $url . "/" . $product_name_without_space. "-".$admin->admin_phone . "-" . time() . $image_count ."." . $file->getClientOriginalExtension();
                 $file->move(public_path('product_images'), $file_name);
                 $productImage = new ProductImage();
                 $productImage->product_image_value = $file_name;
