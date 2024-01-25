@@ -20,8 +20,9 @@ class AdminController extends Controller
     }
     function categories()
     {
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
         $categories = Category::all();
-        return view('admin.categories')->with('categories', $categories);
+        return view('admin.categories')->with('categories', $categories)->with('admin', $admin);
     }
     function addCategory(Request $req)
     {

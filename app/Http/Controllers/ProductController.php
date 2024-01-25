@@ -15,15 +15,16 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ProductController extends Controller
 {
     function products()
-    {
+    {   $admin = Admin::where('admin_phone',session()->get('logged'))->first();
         $products = Product::all();
         
-        return view('admin.products')->with('products', $products);
+        return view('admin.products')->with('products', $products)->with('admin', $admin);
     }
     function addProduct()
     {
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
         $categories = Category::all();
-        return view('admin.addProduct')->with('categories', $categories);
+        return view('admin.addProduct')->with('categories', $categories)->with('admin', $admin);
     }
     function addProductRequest(Request $req)
     {
