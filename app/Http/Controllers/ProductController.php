@@ -57,12 +57,12 @@ class ProductController extends Controller
         $product->product_actual_price = $price_in_coin;
         if($req->product_discount_percentage)
         {
-            $discounted_price = $price_in_coin - (($req->product_discount_percentage/100)*$price_in_coin);
+            $discounted_price = ceil($price_in_coin - (($req->product_discount_percentage/100)*$price_in_coin));
             $product->product_discounted_price = $discounted_price;
             $product->product_discount_percentage = $req->product_discount_percentage;
         }
         else
-        {
+        {   $product->product_discounted_price = $price_in_coin;
             $product->product_discount_percentage = 0;
         }
         $product->product_brand = $req->product_brand;
