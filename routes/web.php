@@ -28,5 +28,7 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/addProduct', [ProductController::class, 'addProduct'])->name('addProduct');
     Route::post('/addProductRequest', [ProductController::class, 'addProductRequest'])->name('addProductRequest');
     Route::get('/users', [UserController::class, 'users'])->name('users');
+    Route::get('/userDetails', [UserController::class, 'userDetails'])->name('userDetails');
+    Route::post('/blockUser', [UserController::class, 'blockUser'])->name('blockUser');
 
 });

@@ -21,22 +21,37 @@
                                                 <th scope="col">Phone Number</th>
                                                 <th scope="col">Balance</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($users as $user)
                                             <tr>
                                                 <th scope="row">{{$user->account_id}}</th>
-                                                <td>{{$user->account_name}}</td>
+                                                <td><a href="{{route('userDetails',['id'=>$user->account_id, 'account_name'=>$user->account_name])}}">{{$user->account_name}}</a></td>
                                                 <td>{{$user->account_phone}}</td>
                                                 <td>{{$user->account_balance}}</td>
                                                 @if($user->account_status=="A")
-                                                <td><span class="badge badge-success shadow-success m-1">Active</span></td>
+                                                <td>Active</td>
                                                 {{-- <button type="button" class="btn btn-success btn-round waves-effect waves-light m-1">Active</button>  --}}
                                                 @else
                                                 {{-- <button type="button" class="btn btn-danger btn-round waves-effect waves-light m-1">Inactive</button>  --}}
-                                                <td><span class="badge badge-danger shadow-danger m-1">Inactive</span></td>
+                                                <td>Inactive</td>
                                                 @endif
+                                                
+
+                                                <td>
+                                                    <form action="{{route('blockUser')}}" method="post">
+                                                      {{@csrf_field()}}
+                                                      <input type="hidden" type="hidden" name="account_id" value="{{$user->account_id}}">
+                                                      @if($user->account_status=="A")
+                                                      <button type="submit" class="badge badge-danger shadow-danger border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Block'>Block</button>
+                                                      @else
+                                                      <button type="submit" class="badge badge-success shadow-success border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Delete'>Unblock</button>
+                                                      @endif
+                                                    </form>
+                                                </td>
+                                                
                                                 
                                             </tr>
                                         @endforeach
@@ -65,34 +80,27 @@
                                         <span aria-hidden="true">&times;</span>
                             </a>
                         </div>
-                        <div class="modal-body">
-                        <form action="{{route('addCategory')}}" method="POST" enctype="multipart/form-data">
-                        {{@csrf_field()}}
-                    <div class="form-group">
-                        <label for="category_name" class="col-form-label">Category Name</label>
-                        <input id="category_name" name="category_name" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="category_logo" class="col-form-label">Category Logo (Optional)</label>
-                        <div class="custom-file">
-                            <input type="file" name="category_logo" class="custom-file-input" id="category_logo" name="category_file">
-                            <label class="custom-file-label" for="category_logo">Choose File</label>
-                        </div>
-                            <small class="form-text text-muted">Accepted formats are JPG,PNG and JPEG</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="category_banner" class="col-form-label">Category Banner (Optional)</label>
-                        <div class="custom-file">
-                            <input type="file" name="category_banner" class="custom-file-input" id="category_banner" name="category_file">
-                            <label class="custom-file-label" for="category_banner">Choose File</label>
-                        </div>
-                            <small class="form-text text-muted">Accepted formats are JPG,PNG and JPEG</small>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                        <button type="submit" class="btn btn-primary ">Save</button>
-                    </div>
-             </form>
-              </div>
+                        
               </div>
     @include('layouts.js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+<script type="text/javascript">
+ 
+     $('.show_confirm').click(function(event) {
+          var form =  $(this).closest("form");
+          var name = $(this).data("name");
+          event.preventDefault();
+          swal({
+              title: `Are you sure you want to change the status of this user?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              form.submit();
+            }
+          });
+      });
+  
+</script>

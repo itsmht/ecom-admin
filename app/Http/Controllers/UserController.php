@@ -36,11 +36,33 @@ class UserController extends Controller
     }
     function userDetails(Request $req)
     {
-        return view('admin.userDetails');
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        $user = Account::where('account_id', $req->id)->first();
+        return view('admin.userDetails')->with('admin', $admin)->with('user',$user);
     }
     function blockUser(Request $req)
     {
-
+        $mytime = Carbon::now();
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        $user = Account::where('account_id', $req->account_id)->first();
+        //dd($user);
+        if($user->account_status=="A")
+        {
+            $user->account_status = "L";
+            $user->save();
+            $log_string = "Blocked By: ".$admin->admin_name ." - Account ID: ".$user->account_id. " -  Name: ".$user->account_id." - Time: ".$mytime->toDateTimeString();
+        }
+        else
+        {
+            $user->account_status = "A";
+            $user->save();
+            $log_string = "Unblocked By: ".$admin->admin_name ." - Account ID: ".$user->account_id. " -  Name: ".$user->account_id." - Time: ".$mytime->toDateTimeString();
+        }
+        
+        $log = new AdminController();
+        $log->createLog("Account",$log_string);
+        Alert::success('Successfull', 'Account Status Changed');
+        return redirect()->route('users');
     }
     function updateUser(Request $req)
     {
