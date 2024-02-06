@@ -28,7 +28,7 @@
                                         @foreach($users as $user)
                                             <tr>
                                                 <th scope="row">{{$user->account_id}}</th>
-                                                <td><a href="{{route('userDetails',['id'=>$user->account_id, 'account_name'=>$user->account_name])}}">{{$user->account_name}}</a></td>
+                                                <td>{{$user->account_name}}</td>
                                                 <td>{{$user->account_phone}}</td>
                                                 <td>{{$user->account_balance}}</td>
                                                 @if($user->account_status=="A")

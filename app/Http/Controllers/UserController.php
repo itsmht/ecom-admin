@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Log;
 use App\Models\Admin;
+use App\Models\Wallet;
 use App\Models\Account;
 use File;
 use Datetime;
@@ -68,5 +69,62 @@ class UserController extends Controller
     function updateUser(Request $req)
     {
 
+    }
+    function wallets()
+    {
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        if($admin->admin_type=="1")
+        {
+            $wallets = DB::table('wallets')
+                ->join('accounts', 'wallets.account_id', '=', 'accounts.account_id')
+                ->join('payment_methods', 'wallets.pm_id', '=', 'payment_methods.pm_id')
+                ->where('wallets.wallet_status', '=', '1')
+                ->select(
+                    'wallets.wallet_id',
+                    'accounts.account_name',
+                    'wallets.wallet_name',
+                    'wallets.wallet_number',
+                    'wallets.wallet_district',
+                    'wallets.wallet_branch',
+                    'wallets.wallet_status',
+                    'payment_methods.pm_name'
+                )
+                ->paginate(15);
+        }
+        else
+        {
+            $wallets = DB::table('wallets')
+                ->join('accounts', 'wallets.account_id', '=', 'accounts.account_id')
+                ->join('refers', 'accounts.account_id', '=', 'refers.accounts_id')
+                ->join('payment_methods', 'wallets.pm_id', '=', 'payment_methods.pm_id')
+                ->where('wallets.wallet_status', '=', '1')
+                ->select(
+                    'wallets.wallet_id',
+                    'accounts.account_name',
+                    'wallets.wallet_name',
+                    'wallets.wallet_number',
+                    'wallets.wallet_district',
+                    'wallets.wallet_branch',
+                    'wallets.wallet_status',
+                    'payment_methods.pm_name'
+                )
+                ->where('refers.admin_id', $admin->admin_id)
+                ->paginate(15);
+        }
+        return view('admin.wallets')->with('admin', $admin)->with('wallets', $wallets);
+        
+    }
+    function approveWallet(Request $req)
+    {
+        $mytime = Carbon::now();
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        $wallet = Wallet::where('wallet_id', $req->wallet_id)->first();
+        $wallet->wallet_status = "Approved";
+        $wallet->save();
+        $log_string = "Wallet Verified By: ".$admin->admin_name ." - Wallet ID: ".$wallet->wallet_id. " -  Name: ".$wallet->wallet_name." - Time: ".$mytime->toDateTimeString();
+        $log = new AdminController();
+        $log->createLog("Account",$log_string);
+        Alert::success('Successfull', 'Wallet Verified');
+        return redirect()->route('wallets');
     }
 }

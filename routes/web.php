@@ -33,6 +33,8 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::post('/blockUser', [UserController::class, 'blockUser'])->name('blockUser');
     Route::get('/recharges', [TransactionController::class, 'recharges'])->name('recharges');
     Route::get('/withdraws', [TransactionController::class, 'withdraws'])->name('withdraws');
+    Route::get('/wallets', [UserController::class, 'wallets'])->name('wallets');
+    Route::post('/approveWallet', [UserController::class, 'approveWallet'])->name('approveWallet');
     Route::post('/approveTransaction', [TransactionController::class, 'approveTransaction'])->name('approveTransaction');
 
 

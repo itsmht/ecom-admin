@@ -35,7 +35,7 @@
                                             <a class="nav-link" href="{{route('withdraws')}}">Pending Withdraws</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Wallet Verification</a>
+                                            <a class="nav-link" href="{{route('wallets')}}">Wallet Verification</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Transaction History</a>
