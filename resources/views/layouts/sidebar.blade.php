@@ -29,7 +29,7 @@
                                 <div id="submenu-5" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Pending Recharges</a>
+                                            <a class="nav-link" href="{{route('recharges')}}">Pending Recharges</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Pending Withdraws</a>

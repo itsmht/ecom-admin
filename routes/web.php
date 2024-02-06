@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TransactionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,5 +31,8 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/users', [UserController::class, 'users'])->name('users');
     Route::get('/userDetails', [UserController::class, 'userDetails'])->name('userDetails');
     Route::post('/blockUser', [UserController::class, 'blockUser'])->name('blockUser');
+    Route::get('/recharges', [TransactionController::class, 'recharges'])->name('recharges');
+    Route::post('/approveTransaction', [TransactionController::class, 'approveTransaction'])->name('approveTransaction');
+
 
 });

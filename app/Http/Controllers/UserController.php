@@ -13,6 +13,7 @@ use Datetime;
 use Carbon\Carbon;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AdminController;
 
 class UserController extends Controller
 {
