@@ -106,7 +106,7 @@ class TransactionController extends Controller
             $transaction_request->request_status = "Failed";
             $transaction_request->save();
             Alert::error('Failed', $process_transaction);
-            return redirect()->route('recharges');
+            return back();
         }
         
 
