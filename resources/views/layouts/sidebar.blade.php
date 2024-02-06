@@ -38,7 +38,7 @@
                                             <a class="nav-link" href="{{route('wallets')}}">Wallet Verification</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Transaction History</a>
+                                            <a class="nav-link" href="{{route('transactionHistory')}}">Transaction History</a>
                                         </li>
                                     </ul>
                                 </div> 

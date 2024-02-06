@@ -10,6 +10,7 @@ use App\Models\Admin;
 use App\Models\Account;
 use App\Models\Transaction;
 use App\Models\TranReq;
+use App\Models\PaymentMethod;
 use File;
 use Datetime;
 use App\Http\Controllers\AdminController;
@@ -81,6 +82,7 @@ class TransactionController extends Controller
         $admin = Admin::where('admin_phone',session()->get('logged'))->first();
         $mytime = Carbon::now();
         $transaction_request = TranReq::where('tr_id', $req->tr_id)->first();
+        $method = PaymentMethod::where('pm_id', $transaction_request->pm_id)->first();
         
         
         if($transaction_request->request_type=="Recharge")
@@ -91,7 +93,7 @@ class TransactionController extends Controller
         {
             $unique_id = "QW".Str::random(4).time();
         }
-        $process_transaction = $this->transaction($transaction_request->account_id, $transaction_request->request_amount, $transaction_request->request_type, $unique_id, $admin);
+        $process_transaction = $this->transaction($transaction_request->account_id, $transaction_request->request_amount, $transaction_request->request_type, $unique_id, $admin, $method->pm_name);
         //dd($process_transaction);
         if($process_transaction=="Success")
         {   $transaction_request->request_status = "Success";
@@ -109,7 +111,7 @@ class TransactionController extends Controller
         
 
     }
-    function transaction($account_id, $amount, $type, $unique_id, $admin)
+    function transaction($account_id, $amount, $type, $unique_id, $admin, $method)
     {
         $mytime = Carbon::now();
         try
@@ -126,6 +128,7 @@ class TransactionController extends Controller
                 $transaction->transaction_credit_amount = $amount;
             }           
             $transaction->transaction_type = $type;
+            $transaction->transaction_payment_method = $method;
             
             //$transaction->transaction_ip_address = $ip_address;
             $transaction->transaction_unique_id = $unique_id;
@@ -177,7 +180,7 @@ class TransactionController extends Controller
                 {
                     $transaction->transaction_status = "Failed";
                     $transaction->save();
-                    return "Failed";
+                    return "Insufficient Balance";
                 }
             }
             
@@ -213,20 +216,58 @@ class TransactionController extends Controller
     {
         try
         {
-            DB::beginTransaction();
+            
             $account = Account::where("account_id", $account_id)->first();
-            $account_balance = $account->account_balance;
-            $account_balance = $account_balance - $amount;
-            $account->account_balance = $account_balance;
-            $account->updated_at = new Datetime();
-            $account->save();
-            DB::commit();
-            return "Success";
+            $balanceCheck = $this->balanceCheck($account_id);
+            if($balanceCheck>=$amount)
+            {   
+                DB::beginTransaction();
+                $account_balance = $account->account_balance;
+                $account_balance = $account_balance - $amount;
+                $account->account_balance = $account_balance;
+                $account->updated_at = new Datetime();
+                $account->save();
+                DB::commit();
+                return "Success";
+            }
+            else
+            {
+                return "Failed";
+            }
+            
         }
         catch(\Exception $e)
         {
             DB::rollback();
             return "Failed";
         }
+    }
+    function transactionHistory()
+    {
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        if($admin->admin_type=="1")
+        {
+            $transactions = DB::table('transactions')
+                ->join('accounts', 'transactions.account_id', '=', 'accounts.account_id')
+                ->select('transactions.*', 'accounts.account_name')
+                ->paginate(15);
+        }
+        else
+        {
+            $transactions = DB::table('transactions')
+                ->join('accounts', 'transactions.account_id', '=', 'accounts.account_id')
+                ->join('refers', 'accounts.account_id', '=', 'refers.account_id')
+                ->select('transactions.*', 'accounts.account_name')
+                ->where('refers.admin_id', $admin->admin_id)
+                ->paginate(15);
+        }
+        return view('admin.transactions')->with('admin', $admin)->with('transactions', $transactions);
+        
+    }
+    function balanceCheck($account_id)
+    {
+        $account = Account::where("account_id", $account_id)->first();
+        $balanceCheck = ($account->account_balance > 0) ? $account->account_balance : 0;
+        return $balanceCheck;
     }
 }

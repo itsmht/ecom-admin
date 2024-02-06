@@ -10,7 +10,7 @@
                         <!-- ============================================================== -->
                         <div class="col-xl-12 col-lg-6 col-md-12 col-sm-12 col-12">
                             <div class="card">
-                                <h5 class="card-header">Pending Recharges</h5> 
+                                <h5 class="card-header">Pending Wallet Verifications</h5> 
                                 <!--<a href="{{route('addProduct')}}" class="btn btn-primary ml-auto" >Add Product</a>-->
                                 <div class="card-body">
                                     <table class="table table-hover">
