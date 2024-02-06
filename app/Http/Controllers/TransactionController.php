@@ -30,6 +30,7 @@ class TransactionController extends Controller
             ->join('accounts', 'transaction_requests.account_id', '=', 'accounts.account_id')
             ->join('payment_methods', 'transaction_requests.pm_id', '=', 'payment_methods.pm_id')
             ->where('transaction_requests.request_status', '=', 'Pre-Approval')
+            ->where('transaction_requests.request_type', '=', 'Recharge')
             ->select('transaction_requests.*', 'accounts.account_name', 'payment_methods.pm_name')
             ->paginate(15);
         }
@@ -40,11 +41,40 @@ class TransactionController extends Controller
             ->join('payment_methods', 'transaction_requests.pm_id', '=', 'payment_methods.pm_id')
             ->join('refers', 'refers.account_id', '=', 'transaction_requests.account_id')
             ->where('transaction_requests.request_status', '=', 'Pre-Approval')
+            ->where('transaction_requests.request_type', '=', 'Recharge')
             ->select('transaction_requests.*', 'accounts.account_name', 'payment_methods.pm_name')
             ->paginate(15);
         }
         
         return view('admin.recharges')->with('admin', $admin)->with('transactions', $transactions);
+    }
+    function withdraws()
+    {
+        $mytime = Carbon::now();
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        if($admin->admin_type=="1")
+        {
+            $transactions = DB::table('transaction_requests')
+            ->join('accounts', 'transaction_requests.account_id', '=', 'accounts.account_id')
+            ->join('payment_methods', 'transaction_requests.pm_id', '=', 'payment_methods.pm_id')
+            ->where('transaction_requests.request_status', '=', 'Pre-Approval')
+            ->where('transaction_requests.request_type', '=', 'Withdraw')
+            ->select('transaction_requests.*', 'accounts.account_name', 'payment_methods.pm_name')
+            ->paginate(15);
+        }
+        else
+        {
+            $transactions = DB::table('transaction_requests')
+            ->join('accounts', 'transaction_requests.account_id', '=', 'accounts.account_id')
+            ->join('payment_methods', 'transaction_requests.pm_id', '=', 'payment_methods.pm_id')
+            ->join('refers', 'refers.account_id', '=', 'transaction_requests.account_id')
+            ->where('transaction_requests.request_status', '=', 'Pre-Approval')
+            ->where('transaction_requests.request_type', '=', 'Withdraw')
+            ->select('transaction_requests.*', 'accounts.account_name', 'payment_methods.pm_name')
+            ->paginate(15);
+        }
+        
+        return view('admin.withdraws')->with('admin', $admin)->with('transactions', $transactions);
     }
     function approveTransaction(Request $req)
     {
@@ -121,7 +151,7 @@ class TransactionController extends Controller
                 }
                 else
                 {
-                    $transaction->transaction_status = "Success";
+                    $transaction->transaction_status = "Failed";
                     $transaction->save();
                     return "Failed";
                 }
@@ -129,7 +159,7 @@ class TransactionController extends Controller
             else
             {
                 $deduct_balance = $this->deductBalance($account_id,$amount);
-                if($add_balance=="Success")
+                if($deduct_balance=="Success")
                 {
                     $transaction->transaction_status = "Success";
                     $transaction->save();
@@ -145,7 +175,7 @@ class TransactionController extends Controller
                 }
                 else
                 {
-                    $transaction->transaction_status = "Success";
+                    $transaction->transaction_status = "Failed";
                     $transaction->save();
                     return "Failed";
                 }

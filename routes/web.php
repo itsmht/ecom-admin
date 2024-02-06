@@ -32,6 +32,7 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/userDetails', [UserController::class, 'userDetails'])->name('userDetails');
     Route::post('/blockUser', [UserController::class, 'blockUser'])->name('blockUser');
     Route::get('/recharges', [TransactionController::class, 'recharges'])->name('recharges');
+    Route::get('/withdraws', [TransactionController::class, 'withdraws'])->name('withdraws');
     Route::post('/approveTransaction', [TransactionController::class, 'approveTransaction'])->name('approveTransaction');
 
 

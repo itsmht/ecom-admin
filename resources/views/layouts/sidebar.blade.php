@@ -32,7 +32,7 @@
                                             <a class="nav-link" href="{{route('recharges')}}">Pending Recharges</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Pending Withdraws</a>
+                                            <a class="nav-link" href="{{route('withdraws')}}">Pending Withdraws</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="#">Wallet Verification</a>

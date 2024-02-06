@@ -99,7 +99,7 @@
           var name = $(this).data("name");
           event.preventDefault();
           swal({
-              title: `Are you sure you want to change the status of this user?`,
+              title: `Are you sure you want to authorize this transaction?`,
               icon: "warning",
               buttons: true,
               dangerMode: true,
