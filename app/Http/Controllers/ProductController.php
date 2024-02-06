@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
     function products()
     {   $admin = Admin::where('admin_phone',session()->get('logged'))->first();
-        $products = Product::all();
+        $products = Product::paginate(10);
         
         return view('admin.products')->with('products', $products)->with('admin', $admin);
     }

@@ -22,7 +22,7 @@
                                 <a class="nav-link " href="{{route('products')}}"  aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-1"><i class="fas fa-briefcase"></i>Products</a>    
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-1"><i class="fas fa-child"></i>Users</a>    
+                                <a class="nav-link " href="{{route('users')}}"  data-target="#submenu-4" aria-controls="submenu-1"><i class="fas fa-child"></i>Users</a>    
                             </li>
                             <li class="nav-item ">
                                 <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-1"><i class="far fa-money-bill-alt"></i>Payments</a>   

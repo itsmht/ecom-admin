@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,5 +27,6 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/products', [ProductController::class, 'products'])->name('products');
     Route::get('/addProduct', [ProductController::class, 'addProduct'])->name('addProduct');
     Route::post('/addProductRequest', [ProductController::class, 'addProductRequest'])->name('addProductRequest');
+    Route::get('/users', [UserController::class, 'users'])->name('users');
 
 });
