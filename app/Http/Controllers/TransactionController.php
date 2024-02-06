@@ -99,7 +99,7 @@ class TransactionController extends Controller
         {   $transaction_request->request_status = "Success";
             $transaction_request->save();
             Alert::success('Successfull', 'The requested transaction was approved');
-            return redirect()->route('recharges');
+            return back();
         }
         else
         {
