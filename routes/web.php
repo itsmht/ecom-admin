@@ -16,6 +16,10 @@ use App\Http\Controllers\TransactionController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/cron', function () {
+    \Artisan::call('request:change');
+    return true;
+});
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login.submit', [AuthController::class, 'loginSubmit'])->name('login.submit');

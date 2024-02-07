@@ -16,7 +16,12 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('request:change')->everyMinute();
     }
+    protected $commands = [
+        'App\Console\Commands\StatusChange',
+
+    ];
 
     /**
      * Register the commands for the application.
