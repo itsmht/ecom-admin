@@ -270,4 +270,18 @@ class TransactionController extends Controller
         $balanceCheck = ($account->account_balance > 0) ? $account->account_balance : 0;
         return $balanceCheck;
     }
+    function rejectTransaction(Request $req)
+    {
+        $mytime = Carbon::now();
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        $transaction_request = TranReq::where('tr_id', $req->tr_id)->first();
+        $transaction_request->request_status = 'Rejected';
+        $transaction_request->save();
+        $log_string = "Transaction Approved By: ".$admin->admin_name ." - Transaction Request ID: ".$transaction_request->transaction_id. " - Amount: ".$transaction_request->request_amount. " - Type: ".$transaction_request->request_type." - Time: ".$mytime->toDateTimeString();
+        $log = new AdminController();
+        $log->createLog("Transaction",$log_string);
+        Alert::success('Successfull', 'The requested transaction was rejected');
+        return back();
+
+    }
 }

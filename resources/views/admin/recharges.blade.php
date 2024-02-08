@@ -40,10 +40,15 @@
                                                 <td>{{\Carbon\Carbon::parse($trxn->created_at)->format('d/m/Y H:i:s')}}</td>
                                                 
                                                 <td>
-                                                    <form action="{{route('approveTransaction')}}" method="post">
+                                                    <form action="{{route('approveTransaction')}}" method="post"class="d-inline">
                                                       {{@csrf_field()}}
                                                       <input type="hidden" type="hidden" name="tr_id" value="{{$trxn->tr_id}}">
                                                       <button type="submit" class="badge badge-success shadow-success border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Approve'>Approve</button>                            
+                                                    </form>
+                                                    <form action="{{ route('rejectTransaction') }}" method="post" class="d-inline">
+                                                        @csrf
+                                                        <input type="hidden" name="tr_id" value="{{$trxn->tr_id}}">
+                                                        <button type="submit" class="badge badge-danger shadow-danger border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Reject'>Reject</button>
                                                     </form>
                                                 </td>
                                             </tr>
