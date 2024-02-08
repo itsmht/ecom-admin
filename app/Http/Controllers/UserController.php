@@ -78,7 +78,7 @@ class UserController extends Controller
             $wallets = DB::table('wallets')
                 ->join('accounts', 'wallets.account_id', '=', 'accounts.account_id')
                 ->join('payment_methods', 'wallets.pm_id', '=', 'payment_methods.pm_id')
-                ->where('wallets.wallet_status', '=', '1')
+                ->where('wallets.wallet_status', '=', 'Pre-Approval')
                 ->select(
                     'wallets.wallet_id',
                     'accounts.account_name',
@@ -97,7 +97,7 @@ class UserController extends Controller
                 ->join('accounts', 'wallets.account_id', '=', 'accounts.account_id')
                 ->join('refers', 'accounts.account_id', '=', 'refers.accounts_id')
                 ->join('payment_methods', 'wallets.pm_id', '=', 'payment_methods.pm_id')
-                ->where('wallets.wallet_status', '=', '1')
+                ->where('wallets.wallet_status', '=', 'Pre-Approval')
                 ->select(
                     'wallets.wallet_id',
                     'accounts.account_name',
