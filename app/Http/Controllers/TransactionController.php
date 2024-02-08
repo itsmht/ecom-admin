@@ -135,7 +135,7 @@ class TransactionController extends Controller
             $transaction->created_at = new Datetime();
             
             
-            if($type=="Recharge")
+            if($type=="Recharge" || $type = "Sell")
             {
                 $add_balance = $this->addBalance($account_id,$amount);
                 if($add_balance=="Success")

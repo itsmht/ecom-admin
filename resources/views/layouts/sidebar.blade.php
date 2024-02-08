@@ -43,6 +43,23 @@
                                     </ul>
                                 </div> 
                             </li>
+
+                            <li class="nav-item ">
+                                <a class="nav-link " href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-6" aria-controls="submenu-1"><i class="far fa-money-bill-alt"></i>Tradings</a>   
+                                <div id="submenu-6" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('sells')}}">Pending Sell Requests</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('buys')}}">Buy History</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{route('trades')}}">Trading History</a>
+                                        </li>
+                                    </ul>
+                                </div> 
+                            </li>
                             
                         </ul>
                     </div>

@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TradeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,6 +42,12 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/transactionHistory', [TransactionController::class, 'transactionHistory'])->name('transactionHistory');
     Route::post('/approveWallet', [UserController::class, 'approveWallet'])->name('approveWallet');
     Route::post('/approveTransaction', [TransactionController::class, 'approveTransaction'])->name('approveTransaction');
+    Route::get('/sells', [TradeController::class, 'sells'])->name('sells');
+    Route::post('/approveTrade', [TradeController::class, 'approveTrade'])->name('approveTrade');
+    Route::post('/rejectTrade', [TradeController::class, 'rejectTrade'])->name('rejectTrade');
+    Route::get('/buys', [TradeController::class, 'buys'])->name('buys');
+    Route::get('/trades', [TradeController::class, 'trades'])->name('trades');
+
 
 
 });
