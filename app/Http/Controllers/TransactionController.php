@@ -277,7 +277,7 @@ class TransactionController extends Controller
         $transaction_request = TranReq::where('tr_id', $req->tr_id)->first();
         $transaction_request->request_status = 'Rejected';
         $transaction_request->save();
-        $log_string = "Transaction Approved By: ".$admin->admin_name ." - Transaction Request ID: ".$transaction_request->transaction_id. " - Amount: ".$transaction_request->request_amount. " - Type: ".$transaction_request->request_type." - Time: ".$mytime->toDateTimeString();
+        $log_string = "Transaction Rejected By: ".$admin->admin_name ." - Transaction Request ID: ".$transaction_request->tr_id. " - Amount: ".$transaction_request->request_amount. " - Type: ".$transaction_request->request_type." - Time: ".$mytime->toDateTimeString();
         $log = new AdminController();
         $log->createLog("Transaction",$log_string);
         Alert::success('Successfull', 'The requested transaction was rejected');

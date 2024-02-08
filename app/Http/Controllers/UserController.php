@@ -123,8 +123,21 @@ class UserController extends Controller
         $wallet->save();
         $log_string = "Wallet Verified By: ".$admin->admin_name ." - Wallet ID: ".$wallet->wallet_id. " -  Name: ".$wallet->wallet_name." - Time: ".$mytime->toDateTimeString();
         $log = new AdminController();
-        $log->createLog("Account",$log_string);
+        $log->createLog("Wallet",$log_string);
         Alert::success('Successfull', 'Wallet Verified');
+        return redirect()->route('wallets');
+    }
+    function rejectWallet(Request $req)
+    {
+        $mytime = Carbon::now();
+        $admin = Admin::where('admin_phone',session()->get('logged'))->first();
+        $wallet = Wallet::where('wallet_id', $req->wallet_id)->first();
+        $wallet->wallet_status = "Rejected";
+        $wallet->save();
+        $log_string = "Wallet Rejected By: ".$admin->admin_name ." - Wallet ID: ".$wallet->wallet_id. " -  Name: ".$wallet->wallet_name." - Time: ".$mytime->toDateTimeString();
+        $log = new AdminController();
+        $log->createLog("Wallet",$log_string);
+        Alert::success('Successfull', 'Wallet Rejected');
         return redirect()->route('wallets');
     }
 }

@@ -104,6 +104,9 @@ class TradeController extends Controller
         $request = TradeRequest::where('request_id', $req->request_id)->first();
         $request->request_status = 'Rejected';
         $request->save();
+        $log_string = "Transaction Rejected By: ".$admin->admin_name ." - Trade Request ID: ".$request->request_id. " - Amount: ".$request->request_amount_total. " - Type: ".$request->request_type." - Time: ".$mytime->toDateTimeString();
+        $log = new AdminController();
+        $log->createLog("Transaction/Trade",$log_string);
         Alert::success('Successfull', 'The requested transaction was rejected');
         return back();
     }

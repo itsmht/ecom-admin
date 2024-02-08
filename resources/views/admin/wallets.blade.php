@@ -38,10 +38,15 @@
                                                 <td>{{$wallet->pm_name}}</td>
                                                 
                                                 <td>
-                                                    <form action="{{route('approveWallet')}}" method="post">
+                                                    <form action="{{route('approveWallet')}}" method="post" class="d-inline">
                                                       {{@csrf_field()}}
-                                                      <input type="hidden" type="hidden" name="wallet_id" value="{{$wallet->wallet_id}}">
+                                                      <input type="hidden" name="wallet_id" value="{{$wallet->wallet_id}}">
                                                       <button type="submit" class="badge badge-success shadow-success border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Approve'>Approve</button>                            
+                                                    </form>
+                                                    <form action="{{ route('rejectWallet') }}" method="post" class="d-inline">
+                                                        @csrf
+                                                        <input type="hidden" name="wallet_id" value="{{$wallet->wallet_id}}">
+                                                        <button type="submit" class="badge badge-danger shadow-danger border border-danger waves-effect waves-light m-1 show_confirm" data-toggle="tooltip" title='Reject'>Reject</button>
                                                     </form>
                                                 </td>
                                             </tr>

@@ -41,6 +41,7 @@ Route::group(['middleware' => ['prevent.back', 'auth.guest', 'logged.user']], fu
     Route::get('/wallets', [UserController::class, 'wallets'])->name('wallets');
     Route::get('/transactionHistory', [TransactionController::class, 'transactionHistory'])->name('transactionHistory');
     Route::post('/approveWallet', [UserController::class, 'approveWallet'])->name('approveWallet');
+    Route::post('/rejectWallet', [UserController::class, 'rejectWallet'])->name('rejectWallet');
     Route::post('/approveTransaction', [TransactionController::class, 'approveTransaction'])->name('approveTransaction');
     Route::post('/rejectTransaction', [TransactionController::class, 'rejectTransaction'])->name('rejectTransaction');
     Route::get('/sells', [TradeController::class, 'sells'])->name('sells');
