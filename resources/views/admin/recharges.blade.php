@@ -35,7 +35,7 @@
                                                 <td>{{$trxn->request_amount}}</td>
                                                 <td>{{$trxn->tr_number}}</td>
                                                 <td>{{$trxn->tr_name}}</td>
-                                                <td><img style="width:30px; height:30px;" src="{{$trxn->tr_image}}" alt="Nothing to show" data-toggle="modal" data-target="#imageModal" ></td>
+                                                <td><img style="width:30px; height:30px;" src="{{$trxn->tr_image}}" alt="Nothing to show" data-toggle="modal" data-target="#imageModal{{$trxn->tr_id}}" ></td>
                                                 <td>{{$trxn->pm_name}}</td>
                                                 <td>{{\Carbon\Carbon::parse($trxn->created_at)->format('d/m/Y H:i:s')}}</td>
                                                 
