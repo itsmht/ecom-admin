@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Request;
+use App\Models\TradeRequest;
 use App\Models\TranReq;
 class StatusChange extends Command
 {
@@ -28,7 +28,7 @@ class StatusChange extends Command
      */
     public function handle()
     {
-        $requests = Request::where('request_status', 'Requested')->get();
+        $requests = TradeRequest::where('request_status', 'Requested')->get();
         foreach($requests as $request)
         {
             $request->request_status = "Pre-Approval";
